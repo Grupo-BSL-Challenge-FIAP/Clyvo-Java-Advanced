@@ -1,13 +1,15 @@
 package br.com.clyvo.petguardian.controller;
 
 
-import br.com.clyvo.petguardian.request.AccountRequest;
-import br.com.clyvo.petguardian.response.AccountResponse;
+import br.com.clyvo.petguardian.dto.request.AccountRequest;
+import br.com.clyvo.petguardian.dto.response.AccountResponse;
 import br.com.clyvo.petguardian.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +20,9 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping
-    public AccountResponse create(@RequestBody @Valid AccountRequest request) {
-        return service.create(request);
+    public ResponseEntity<AccountResponse> create(@RequestBody @Valid AccountRequest request) {
+        AccountResponse response = service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
@@ -38,7 +41,8 @@ public class AccountController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

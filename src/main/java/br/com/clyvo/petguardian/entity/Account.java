@@ -1,5 +1,6 @@
 package br.com.clyvo.petguardian.entity;
 
+import br.com.clyvo.petguardian.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

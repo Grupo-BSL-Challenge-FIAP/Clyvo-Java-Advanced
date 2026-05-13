@@ -1,10 +1,9 @@
 package br.com.clyvo.petguardian.service;
 
 import br.com.clyvo.petguardian.entity.Account;
-import br.com.clyvo.petguardian.entity.Role;
 import br.com.clyvo.petguardian.repository.AccountRepository;
-import br.com.clyvo.petguardian.request.AccountRequest;
-import br.com.clyvo.petguardian.response.AccountResponse;
+import br.com.clyvo.petguardian.dto.request.AccountRequest;
+import br.com.clyvo.petguardian.dto.response.AccountResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
