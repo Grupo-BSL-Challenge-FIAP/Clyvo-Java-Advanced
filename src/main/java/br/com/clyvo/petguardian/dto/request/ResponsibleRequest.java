@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.time.LocalDate;
 
 public record ResponsibleRequest(
@@ -16,7 +18,7 @@ public record ResponsibleRequest(
 
         @Schema(example = "123.456.789-00")
         @NotBlank(message = "O CPF é obrigatório")
-        @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "O CPF deve seguir o formato 000.000.000-00")
+        @CPF
         String cpf,
 
         @Schema(example = "1995-05-15")
