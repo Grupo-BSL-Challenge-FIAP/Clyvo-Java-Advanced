@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 public record VeterinarianRequest(
         @Schema(example = "Dr. Ricardo Santos")
@@ -14,7 +15,7 @@ public record VeterinarianRequest(
 
         @Schema(example = "123.456.789-00")
         @NotBlank(message = "O CPF é obrigatório")
-        @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "O CPF deve seguir o formato 000.000.000-00")
+        @CPF
         String cpf,
 
         @Schema(example = "CRMV-SP 12345")
