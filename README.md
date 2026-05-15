@@ -124,3 +124,27 @@ O coração do sistema, vinculando o animal ao seu tutor e médico responsável.
   "veterinarianId": 1
 }
 ```
+
+# 📊 5. Clinical History 
+Este módulo é o núcleo de monitoramento do ecossistema, onde são registrados os dados biométricos (temperatura, batimentos, nível de atividade)
+
+| Método | Endpoint | Descrição |
+|--------|----------|------------|
+| POST | `/clinical-histories` | Registra novas métricas de saúde para um pet |
+| GET | `/clinical-histories` | Lista todos os registros clínicos (Paginado) |
+| GET | `/clinical-histories/{id}` | Busca um registro específico por ID |
+| GET | `/clinical-histories/pet/{petId}` | Lista o histórico completo de um animal específico |
+| PUT | `/clinical-histories/{id}` | Atualiza ou corrige dados de um registro existente |
+| DELETE | `/clinical-histories/{id}` | Remove um registro do histórico clínico |
+
+```json
+{
+  "temperature": 38.5,
+  "heartRate": 85,
+  "activityLevel": "HIGH",
+  "healthScore": 95.0,
+  "description": "Monitoramento via ESP32",
+  "observations": "Dados coletados após exercício matinal",
+  "petId": 1
+}
+```
