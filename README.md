@@ -11,7 +11,9 @@ Acesse a documentação interativa e realize testes diretamente pelo navegador:
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
-
+```bash
+http://localhost:8080/api-docs
+```
 ---
 
 # 🔑 1. Accounts 
@@ -154,8 +156,8 @@ Este módulo gerencia as notificações geradas pelo sistema com base no monitor
 
 | Método | Endpoint | Descrição |
 |--------|----------|------------|
-| POST | `/alerts` | Registra um novo alerta (Ex: via trigger de saúde/IoT) |
-| GET | `/alerts` | Lista todos os alertas registrados (Paginado) |
+| POST | `/alerts` | Registra um novo alerta  |
+| GET | `/alerts` | Lista todos os alertas registrados  |
 | GET | `/alerts/{id}` | Busca os detalhes de um alerta específico |
 | GET | `/alerts/pet/{petId}` | Lista o histórico de alertas de um animal específico |
 | PUT | `/alerts/{id}` | Atualiza o alerta e o status |
@@ -170,3 +172,25 @@ Este módulo gerencia as notificações geradas pelo sistema com base no monitor
   "petId": 1
 }
 ```
+
+# 📅 7. Appointments 
+Este módulo gerencia o agendamento, diagnóstico e acompanhamento clínico realizado pelos veterinários.
+
+| Método | Endpoint | Descrição |
+|--------|----------|------------|
+| GET | `/appointments` | Lista todas as consultas |
+| POST | `/appointments` | Agenda uma nova consulta |
+| GET | `/appointments/{id}` | Busca detalhes de uma consulta específica |
+| GET | `/alerts/{id}` | Busca os detalhes de um alerta específico |
+| PUT | `/appointments/{id}` | Atualiza dados ou status  |
+| DELETE | `/appointments/{id}` | Cancela ou remove uma consulta |
+
+```json
+{
+  "appointmentDate": "2026-06-20T14:30:00",
+  "reason": "Consulta de rotina e check-up semestral",
+  "petId": 1,
+  "veterinarianId": 1
+}
+```
+
