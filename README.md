@@ -148,3 +148,25 @@ Este módulo é o núcleo de monitoramento do ecossistema, onde são registrados
   "petId": 1
 }
 ```
+
+# 🚨 6. Alerts (Alertas Preventivos)
+Este módulo gerencia as notificações geradas pelo sistema com base no monitoramento dos pets.
+
+| Método | Endpoint | Descrição |
+|--------|----------|------------|
+| POST | `/alerts` | Registra um novo alerta (Ex: via trigger de saúde/IoT) |
+| GET | `/alerts` | Lista todos os alertas registrados (Paginado) |
+| GET | `/alerts/{id}` | Busca os detalhes de um alerta específico |
+| GET | `/alerts/pet/{petId}` | Lista o histórico de alertas de um animal específico |
+| PUT | `/alerts/{id}` | Atualiza o alerta e o status |
+| DELETE | `/alerts/{id}` | Remove um alerta do sistema |
+
+```json
+{
+  "type": "TEMPERATURE",
+  "message": "Febre detectada: 40.2°C. O animal já foi medicado.",
+  "riskLevel": "HIGH",
+  "status": "RESOLVED",
+  "petId": 1
+}
+```
