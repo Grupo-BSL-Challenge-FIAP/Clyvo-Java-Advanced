@@ -1,6 +1,5 @@
 package br.com.clyvo.petguardian.service;
 
-
 import br.com.clyvo.petguardian.dto.request.ResponsibleRequest;
 import br.com.clyvo.petguardian.dto.response.ResponsibleResponse;
 import br.com.clyvo.petguardian.entity.Account;
@@ -8,11 +7,13 @@ import br.com.clyvo.petguardian.entity.Responsible;
 import br.com.clyvo.petguardian.repository.AccountRepository;
 import br.com.clyvo.petguardian.repository.ResponsibleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class ResponsibleService {
     private final ResponsibleRepository repository;
     private final AccountRepository accountRepository;
 
+    @CacheEvict(value = "responsibles", allEntries = true)
     public ResponsibleResponse create(ResponsibleRequest request) {
         Account account = findAccountById(request.accountId());
 
@@ -36,14 +38,21 @@ public class ResponsibleService {
         return toResponse(repository.save(responsible));
     }
 
+    @Cacheable("responsibles")
     public Page<ResponsibleResponse> findAll(Pageable pageable) {
         return repository.findAll(pageable).map(this::toResponse);
     }
 
+    @Cacheable(value = "responsibles", key = "#id")
     public ResponsibleResponse findById(Long id) {
         return toResponse(findResponsibleById(id));
     }
 
+    public Page<ResponsibleResponse> findByName(String name, Pageable pageable) {
+        return repository.findByFullNameContainingIgnoreCase(name, pageable).map(this::toResponse);
+    }
+
+    @CacheEvict(value = "responsibles", allEntries = true)
     public ResponsibleResponse update(Long id, ResponsibleRequest request) {
         Responsible responsible = findResponsibleById(id);
         Account account = findAccountById(request.accountId());
@@ -58,12 +67,12 @@ public class ResponsibleService {
         return toResponse(repository.save(responsible));
     }
 
+    @CacheEvict(value = "responsibles", allEntries = true)
     public void delete(Long id) {
         Responsible responsible = findResponsibleById(id);
         repository.delete(responsible);
     }
 
-    // Métodos Auxiliares para limpeza de código
     private Responsible findResponsibleById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
