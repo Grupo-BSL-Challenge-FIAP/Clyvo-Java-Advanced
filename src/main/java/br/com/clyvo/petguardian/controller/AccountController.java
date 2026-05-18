@@ -1,6 +1,5 @@
 package br.com.clyvo.petguardian.controller;
 
-
 import br.com.clyvo.petguardian.dto.request.AccountRequest;
 import br.com.clyvo.petguardian.dto.response.AccountResponse;
 import br.com.clyvo.petguardian.service.AccountService;
@@ -26,18 +25,21 @@ public class AccountController {
     }
 
     @GetMapping
-    public Page<AccountResponse> findAll(Pageable pageable) {
-        return service.findAll(pageable);
+    public ResponseEntity<Page<AccountResponse>> findAll(Pageable pageable) {
+        Page<AccountResponse> response = service.findAll(pageable);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}")
-    public AccountResponse findById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<AccountResponse> findById(@PathVariable Long id) {
+        AccountResponse response = service.findById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("{id}")
-    public AccountResponse update(@PathVariable Long id, @RequestBody @Valid AccountRequest request) {
-        return service.update(id, request);
+    public ResponseEntity<AccountResponse> update(@PathVariable Long id, @RequestBody @Valid AccountRequest request) {
+        AccountResponse response = service.update(id, request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("{id}")

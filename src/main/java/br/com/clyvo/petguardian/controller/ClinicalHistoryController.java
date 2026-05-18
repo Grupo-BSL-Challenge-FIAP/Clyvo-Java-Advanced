@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,34 +21,38 @@ public class ClinicalHistoryController {
     private final ClinicalHistoryService service;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ClinicalHistoryResponse create(@RequestBody @Valid ClinicalHistoryRequest request) {
-        return service.create(request);
+    public ResponseEntity<ClinicalHistoryResponse> create(@RequestBody @Valid ClinicalHistoryRequest request) {
+        ClinicalHistoryResponse response = service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    public Page<ClinicalHistoryResponse> getAll(Pageable pageable) {
-        return service.findAll(pageable);
+    public ResponseEntity<Page<ClinicalHistoryResponse>> getAll(Pageable pageable) {
+        Page<ClinicalHistoryResponse> response = service.findAll(pageable);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ClinicalHistoryResponse getById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<ClinicalHistoryResponse> getById(@PathVariable Long id) {
+        ClinicalHistoryResponse response = service.findById(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/pet/{petId}")
-    public List<ClinicalHistoryResponse> getByPet(@PathVariable Long petId) {
-        return service.findByPet(petId);
+    public ResponseEntity<List<ClinicalHistoryResponse>> getByPet(@PathVariable Long petId) {
+        List<ClinicalHistoryResponse> response = service.findByPet(petId);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ClinicalHistoryResponse update(@PathVariable Long id, @RequestBody @Valid ClinicalHistoryRequest request) {
-        return service.update(id, request);
+    public ResponseEntity<ClinicalHistoryResponse> update(@PathVariable Long id, @RequestBody @Valid ClinicalHistoryRequest request) {
+        ClinicalHistoryResponse response = service.update(id, request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

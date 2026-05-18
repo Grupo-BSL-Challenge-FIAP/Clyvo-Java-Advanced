@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,29 +19,32 @@ public class AppointmentController {
     private final AppointmentService service;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AppointmentResponse create(@RequestBody @Valid AppointmentRequest request) {
-        return service.create(request);
+    public ResponseEntity<AppointmentResponse> create(@RequestBody @Valid AppointmentRequest request) {
+        AppointmentResponse response = service.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
-    public AppointmentResponse getById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<AppointmentResponse> getById(@PathVariable Long id) {
+        AppointmentResponse response = service.findById(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public Page<AppointmentResponse> getAll(Pageable pageable) {
-        return service.findAll(pageable);
+    public ResponseEntity<Page<AppointmentResponse>> getAll(Pageable pageable) {
+        Page<AppointmentResponse> response = service.findAll(pageable);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public AppointmentResponse update(@PathVariable Long id, @RequestBody @Valid AppointmentRequest request) {
-        return service.update(id, request);
+    public ResponseEntity<AppointmentResponse> update(@PathVariable Long id, @RequestBody @Valid AppointmentRequest request) {
+        AppointmentResponse response = service.update(id, request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
