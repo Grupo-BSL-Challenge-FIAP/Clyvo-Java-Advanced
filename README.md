@@ -4,7 +4,7 @@ O PetGuardian é uma plataforma de monitoramento inteligente para animais de est
 
 ---
 
-# 🚀 Swagger UI
+# 🚀 Swagger UI & Consoles
 
 Acesse a documentação interativa e realize testes diretamente pelo navegador:
 
@@ -13,6 +13,9 @@ http://localhost:8080/swagger-ui/index.html
 ```
 ```bash
 http://localhost:8080/api-docs
+```
+```bash
+http://localhost:8080/h2-console
 ```
 ---
 
@@ -51,6 +54,7 @@ Gerenciamento de profissionais e registros CRMV.
 |--------|----------|------------|
 | POST | `/veterinarians` | Cadastra um veterinário vinculado a uma Account |
 | GET | `/veterinarians` | Lista profissionais e especialidades |
+| GET | `/veterinarians/{id}` | Busca detalhes de um veterinário específico |
 | PUT | `/veterinarians/{id}` | Atualiza dados profissionais ou especialidade |
 | DELETE | `/veterinarians/{id}` | Remove o registro do veterinário |
 
@@ -78,6 +82,8 @@ Informações de contato e localização dos donos dos pets.
 |--------|----------|------------|
 | POST | `/responsibles` | Cadastra um novo tutor responsável |
 | GET | `/responsibles` | Lista todos os responsáveis cadastrados |
+| GET | `/responsibles/{id}` | Busca um responsável pelo ID |
+| GET | `/responsibles/search` | Busca responsáveis por nome |
 | PUT | `/responsibles/{id}` | Atualiza endereço ou telefone de contato |
 | DELETE | `/responsibles/{id}` | Remove o registro do responsável |
 
@@ -107,7 +113,11 @@ O coração do sistema, vinculando o animal ao seu tutor e médico responsável.
 | POST | `/pets` | Cadastra um pet e define seu status inicial |
 | GET | `/pets` | Lista todos os pets e seus estados de saúde |
 | GET | `/pets/{id}` | Detalhes biométricos de um pet específico |
-| PUT | `/pets/{id}` | Atualiza peso, status ou dados do animal |
+| GET | `/pets/search/name` | Busca pets por nome |
+| GET | `/pets/search/species` | Busca pets por espécie |
+| GET | `/pets/search/status` | Busca pets por status |
+| PUT | `/pets/{id}` | Atualiza peso, status ou dados do anim
+| DELETE | `/pets/{id}` | Remove um pet do sistema |
 
 ## Exemplo de Cadastro (POST)
 
@@ -156,7 +166,7 @@ Este módulo gerencia as notificações geradas pelo sistema com base no monitor
 
 | Método | Endpoint | Descrição |
 |--------|----------|------------|
-| POST | `/alerts` | Registra um novo alerta  |
+| POST | `/alerts` | Registra um novo alerta preventivo  |
 | GET | `/alerts` | Lista todos os alertas registrados  |
 | GET | `/alerts/{id}` | Busca os detalhes de um alerta específico |
 | GET | `/alerts/pet/{petId}` | Lista o histórico de alertas de um animal específico |
@@ -178,12 +188,11 @@ Este módulo gerencia o agendamento, diagnóstico e acompanhamento clínico real
 
 | Método | Endpoint | Descrição |
 |--------|----------|------------|
-| GET | `/appointments` | Lista todas as consultas |
-| POST | `/appointments` | Agenda uma nova consulta |
+| POST | `/appointments` | Agenda uma nova consulta veterinária|
+| GET | `/appointments` | Lista todas as consultas agendadas |
 | GET | `/appointments/{id}` | Busca detalhes de uma consulta específica |
-| GET | `/alerts/{id}` | Busca os detalhes de um alerta específico |
 | PUT | `/appointments/{id}` | Atualiza dados ou status  |
-| DELETE | `/appointments/{id}` | Cancela ou remove uma consulta |
+| DELETE | `/appointments/{id}` | Cancela ou remove uma consulta do cronograma |
 
 ```json
 {
