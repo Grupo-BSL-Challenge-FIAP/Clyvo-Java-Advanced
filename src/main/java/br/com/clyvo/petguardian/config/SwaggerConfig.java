@@ -18,6 +18,6 @@ public class SwaggerConfig {
                         .description("API para gerenciamento de contas, responsáveis e pets do sistema PetGuardian.")
                         .contact(new Contact()
                                 .name("Suporte Clyvo")
-                                .email("suporte@clyvo.com.br")));
+                                .email("contatoPetGuardian1@gmail.com")));
     }
 }
